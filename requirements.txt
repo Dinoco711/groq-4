@@ -7,3 +7,8 @@ gunicorn==21.2.0
 groq
 PyPDF2==3.0.1
 requests==2.31.0 
+langchain
+langchain-community
+sentence-transformers
+faiss-cpu
+pypdf
