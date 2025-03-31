@@ -6,7 +6,7 @@ from datetime import datetime
 import requests
 import json
 
-from .knowledge_base import query_knowledge_base  # Import FAISS search function
+from knowledge_base import query_knowledge_base  # Import FAISS search function
 
 # Initialize Flask app
 app = Flask(__name__)
