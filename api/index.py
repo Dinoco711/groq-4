@@ -5,8 +5,11 @@ from groq import Groq
 from datetime import datetime
 import requests
 import json
+# added for setting system path
+import sys
+sys.path.append('/path/to/api') 
+
 from knowledge_base import query_knowledge_base  # Import FAISS search function
-from dotenv import load_dotenv
 
 # Initialize Flask app
 app = Flask(__name__)
