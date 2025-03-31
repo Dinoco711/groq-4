@@ -1,32 +1,23 @@
 import os
-import pickle
 from pathlib import Path
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
-# Define paths
-FAISS_FOLDER = Path("faiss_index")  # Ensure this matches your `pdf_to_faiss.py`
-PICKLE_FILE = FAISS_FOLDER / "faiss_index.pkl"
+# Define FAISS folder
+FAISS_FOLDER = Path("faiss_index")  # Ensure this matches `pdf_to_faiss.py`
 
 # Load FAISS index
 def load_faiss_index():
     if not FAISS_FOLDER.exists():
         raise FileNotFoundError("❌ FAISS index folder not found. Run `pdf_to_faiss.py` first.")
 
-    if not PICKLE_FILE.exists():
-        raise FileNotFoundError("❌ FAISS pickle file not found. Ensure the FAISS index was saved correctly.")
-
     try:
         # Load embedding model
         embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
         
-        # Load FAISS index
-        with open(PICKLE_FILE, "rb") as f:
-            vector_store = pickle.load(f)
-        
-        if not isinstance(vector_store, FAISS):
-            raise ValueError("❌ Invalid FAISS index file.")
-        
+        # Load FAISS index directly from folder (NO pickle)
+        vector_store = FAISS.load_local(str(FAISS_FOLDER), embedding_model)
+
         print("✅ FAISS index loaded successfully!")
         return vector_store, embedding_model
 
